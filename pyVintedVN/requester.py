@@ -5,6 +5,7 @@ import configuration_values
 import proxies
 import sys
 import os
+from configuration_values import USER_AGENTS
 
 # Add the parent directory to sys.path to import logger
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -84,7 +85,9 @@ class Requester:
         Raises:
             HTTPError: If the request fails after all retries
         """
-
+        
+        self.session.headers["User-Agent"] = random.choice(USER_AGENTS)
+        
         # Set a random proxy for this request
         proxy_configured = proxies.configure_proxy(self.session)
         if self.debug and proxy_configured:
